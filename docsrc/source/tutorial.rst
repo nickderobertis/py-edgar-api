@@ -18,20 +18,20 @@ Download Filings of a Particular Type for All Companies
 This is an example::
 
     import os
-    import edgar
+    import edgarapi
 
     root_folder = 'filings'
     filing_type = '10-K'
     sub_document_type = 'EX-21.01'
 
-    ed = edgar.Edgar()
+    ed = edgarapi.Edgar()
 
     for name, cik in ed.all_companies_dict.items():
 
         # Get company filing objects
-        company = edgar.Company(name, cik)
+        company = edgarapi.Company(name, cik)
         tree = company.get_all_filings(filing_type = filing_type)
-        filings = edgar.get_filings(tree, no_of_documents=100)
+        filings = edgarapi.get_filings(tree, no_of_documents=100)
 
         # Set folder for this company and make it
         company_folder = os.path.join(root_folder, cik)

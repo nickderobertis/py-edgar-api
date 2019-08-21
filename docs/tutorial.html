@@ -48,20 +48,20 @@
 <h3>Download Filings of a Particular Type for All Companies<a class="headerlink" href="#download-filings-of-a-particular-type-for-all-companies" title="Permalink to this headline">¶</a></h3>
 <p>This is an example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">edgar</span>
+<span class="kn">import</span> <span class="nn">edgarapi</span>
 
 <span class="n">root_folder</span> <span class="o">=</span> <span class="s1">&#39;filings&#39;</span>
 <span class="n">filing_type</span> <span class="o">=</span> <span class="s1">&#39;10-K&#39;</span>
 <span class="n">sub_document_type</span> <span class="o">=</span> <span class="s1">&#39;EX-21.01&#39;</span>
 
-<span class="n">ed</span> <span class="o">=</span> <span class="n">edgar</span><span class="o">.</span><span class="n">Edgar</span><span class="p">()</span>
+<span class="n">ed</span> <span class="o">=</span> <span class="n">edgarapi</span><span class="o">.</span><span class="n">Edgar</span><span class="p">()</span>
 
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">cik</span> <span class="ow">in</span> <span class="n">ed</span><span class="o">.</span><span class="n">all_companies_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 
     <span class="c1"># Get company filing objects</span>
-    <span class="n">company</span> <span class="o">=</span> <span class="n">edgar</span><span class="o">.</span><span class="n">Company</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">cik</span><span class="p">)</span>
+    <span class="n">company</span> <span class="o">=</span> <span class="n">edgarapi</span><span class="o">.</span><span class="n">Company</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">cik</span><span class="p">)</span>
     <span class="n">tree</span> <span class="o">=</span> <span class="n">company</span><span class="o">.</span><span class="n">get_all_filings</span><span class="p">(</span><span class="n">filing_type</span> <span class="o">=</span> <span class="n">filing_type</span><span class="p">)</span>
-    <span class="n">filings</span> <span class="o">=</span> <span class="n">edgar</span><span class="o">.</span><span class="n">get_filings</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">no_of_documents</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">filings</span> <span class="o">=</span> <span class="n">edgarapi</span><span class="o">.</span><span class="n">get_filings</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">no_of_documents</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 
     <span class="c1"># Set folder for this company and make it</span>
     <span class="n">company_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_folder</span><span class="p">,</span> <span class="n">cik</span><span class="p">)</span>
