@@ -3,6 +3,7 @@ import requests
 
 BASE_URL = "https://www.sec.gov"
 
+
 class Company:
     """
     Used for downloading filings for a particular company.
@@ -12,12 +13,13 @@ class Company:
         self.name = name
         self.cik = cik
 
-    def getFilingsUrl(self, filingType="", priorTo="", ownership="include", noOfEntries=100):
-        url = "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=" + self.cik + "&type=" + filingType + "&dateb=" + priorTo + "&owner=" +  ownership + "&count=" + str(noOfEntries)
+    def get_filings_url(self, filing_type="", prior_to="", ownership="include", no_of_entries=100):
+        url = "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=" + self.cik + "&type=" + filing_type + \
+              "&dateb=" + prior_to + "&owner=" + ownership + "&count=" + str(no_of_entries)
         return url
 
-    def getAllFilings(self, filingType="", priorTo="", ownership="include", noOfEntries=100):
-        page = requests.get(self.getFilingsUrl(filingType, priorTo, ownership, noOfEntries))
+    def get_all_filings(self, filing_type="", prior_to="", ownership="include", no_of_entries=100):
+        page = requests.get(self.get_filings_url(filing_type, prior_to, ownership, no_of_entries))
         return html.fromstring(page.content)
 
 
@@ -41,13 +43,13 @@ class Edgar:
         self.all_companies_dict = dict(all_companies_array)
         self.all_companies_dict_rev = dict(all_companies_array_rev)
 
-    def getCikByCompanyName(self, name):
+    def get_cik_by_company_name(self, name):
         return self.all_companies_dict[name]
 
-    def getCompanyNameByCik(self, cik):
+    def get_company_name_by_cik(self, cik):
         return self.all_companies_dict_rev[cik]
 
-    def findCompanyName(self, words):
+    def find_company_name(self, words):
         possibleCompanies = []
         words = words.lower()
         for company in self.all_companies_dict:
@@ -64,7 +66,7 @@ class Filing:
 
     def __init__(self, elem):
         self.url = BASE_URL + elem.attrib["href"]
-        self.elem = getRequest(self.url)
+        self.elem = _get_request_as_html_obj(self.url)
 
     @property
     def text_content(self):
@@ -96,7 +98,7 @@ class Filing:
 
     def _get_content_by_link_xpath(self, xpath):
         url = BASE_URL + self.elem.xpath(xpath)[0].attrib["href"]
-        content = getRequest(url)
+        content = _get_request_as_html_obj(url)
         return content
 
     def _get_text_content_by_link_xpath(self, xpath):
@@ -113,13 +115,13 @@ class Filing:
         return self.elem.xpath(info_xpath)[0]
 
 
-def getRequest(href):
+def _get_request_as_html_obj(href):
     page = requests.get(href)
     return html.fromstring(page.content)
 
 
-def getDocuments(tree, sub_document=None, noOfDocuments=1, as_html=False):
-    filings = getFilings(tree, noOfDocuments=noOfDocuments)
+def get_documents(tree, sub_document=None, no_of_documents=1, as_html=False):
+    filings = get_filings(tree, no_of_documents=no_of_documents)
     if sub_document is None:
         if as_html:
             attr = 'content'
@@ -134,8 +136,8 @@ def getDocuments(tree, sub_document=None, noOfDocuments=1, as_html=False):
     return result
 
 
-def getFilings(tree, noOfDocuments=1):
-    elems = tree.xpath('//*[@id="documentsbutton"]')[:noOfDocuments]
+def get_filings(tree, no_of_documents=1):
+    elems = tree.xpath('//*[@id="documentsbutton"]')[:no_of_documents]
     return [Filing(elem) for elem in elems]
 
 
@@ -146,19 +148,11 @@ def _get_sub_document_xpath(sub_document=None):
     return '//*[@id="formDiv"]/div/table/tr[td[4]/text()="{sub_document}"]/td[3]/a'.format(sub_document=sub_document)
 
 
-def getCIKFromCompany(companyName):
-    tree = getRequest("https://www.sec.gov/cgi-bin/browse-edgar?company=" + companyName)
+def get_cik_from_company(companyName):
+    tree = _get_request_as_html_obj("https://www.sec.gov/cgi-bin/browse-edgar?company=" + companyName)
     CIKList = tree.xpath('//*[@id="seriesDiv"]/table/tr[*]/td[1]/a/text()')
     namesList = []
     for elem in tree.xpath('//*[@id="seriesDiv"]/table/tr[*]/td[2]'):
         namesList.append(elem.text_content())
     return list(zip(CIKList, namesList))
 
-
-
-
-
-def test():
-    com = Company("Oracle Corp", "0001341439")
-    tree = com.getAllFilings(filingType = "10-K")
-    return getDocuments(tree)

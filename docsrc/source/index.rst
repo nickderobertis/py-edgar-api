@@ -22,8 +22,8 @@ An overview
       edgarapi.edgar.Filing
       edgarapi.edgar.Edgar
       edgarapi.edgar.Company
-      edgarapi.edgar.getFilings
-      edgarapi.edgar.getDocuments
+      edgarapi.edgar.get_filings
+      edgarapi.edgar.get_documents
 
 
 API Documentation

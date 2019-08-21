@@ -30,8 +30,8 @@ This is an example::
 
         # Get company filing objects
         company = edgar.Company(name, cik)
-        tree = company.getAllFilings(filingType = filing_type)
-        filings = edgar.getFilings(tree, noOfDocuments=100)
+        tree = company.get_all_filings(filing_type = filing_type)
+        filings = edgar.get_filings(tree, no_of_documents=100)
 
         # Set folder for this company and make it
         company_folder = os.path.join(root_folder, cik)
