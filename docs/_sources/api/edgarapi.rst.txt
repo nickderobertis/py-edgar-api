@@ -1,0 +1,22 @@
+edgarapi package
+================
+
+Submodules
+----------
+
+edgarapi.edgar module
+---------------------
+
+.. automodule:: edgarapi.edgar
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: edgarapi
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>edgarapi.edgar &#8212; edgarapi 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_paramlinks.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for edgarapi.edgar</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">html</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://www.sec.gov&quot;</span>
+
+
+<div class="viewcode-block" id="Company"><a class="viewcode-back" href="../../api/edgarapi.html#edgarapi.edgar.Company">[docs]</a><span class="k">class</span> <span class="nc">Company</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Used for downloading filings for a particular company.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Company.__init__"><a class="viewcode-back" href="../../api/edgarapi.html#edgarapi.edgar.Company.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">cik</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cik</span> <span class="o">=</span> <span class="n">cik</span></div>
+
+<div class="viewcode-block" id="Company.get_filings_url"><a class="viewcode-back" href="../../api/edgarapi.html#edgarapi.edgar.Company.get_filings_url">[docs]</a>    <span class="k">def</span> <span class="nf">get_filings_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filing_type</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">prior_to</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">ownership</span><span class="o">=</span><span class="s2">&quot;include&quot;</span><span class="p">,</span> <span class="n">no_of_entries</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&amp;CIK=&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">cik</span> <span class="o">+</span> <span class="s2">&quot;&amp;type=&quot;</span> <span class="o">+</span> <span class="n">filing_type</span> <span class="o">+</span> \
+              <span class="s2">&quot;&amp;dateb=&quot;</span> <span class="o">+</span> <span class="n">prior_to</span> <span class="o">+</span> <span class="s2">&quot;&amp;owner=&quot;</span> <span class="o">+</span> <span class="n">ownership</span> <span class="o">+</span> <span class="s2">&quot;&amp;count=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">no_of_entries</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">url</span></div>
+
+<div class="viewcode-block" id="Company.get_all_filings"><a class="viewcode-back" href="../../api/edgarapi.html#edgarapi.edgar.Company.get_all_filings">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_filings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filing_type</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">prior_to</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">ownership</span><span class="o">=</span><span class="s2">&quot;include&quot;</span><span class="p">,</span> <span class="n">no_of_entries</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_filings_url</span><span class="p">(</span><span class="n">filing_type</span><span class="p">,</span> <span class="n">prior_to</span><span class="p">,</span> <span class="n">ownership</span><span class="p">,</span> <span class="n">no_of_entries</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">content</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Edgar"><a class="viewcode-back" href="../../api/edgarapi.html#edgarapi.edgar.Edgar">[docs]</a><span class="k">class</span> <span class="nc">Edgar</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Used for getting companies.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Edgar.__init__"><a class="viewcode-back" href="../../api/edgarapi.html#edgarapi.edgar.Edgar.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">all_companies_page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;https://www.sec.gov/Archives/edgar/cik-lookup-data.txt&quot;</span><span class="p">)</span>
+        <span class="n">all_companies_content</span> <span class="o">=</span> <span class="n">all_companies_page</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;latin1&quot;</span><span class="p">)</span>
+        <span class="n">all_companies_array</span> <span class="o">=</span> <span class="n">all_companies_content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">all_companies_array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">all_companies_array_rev</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">all_companies_array</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">item</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">item_arr</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+            <span class="n">all_companies_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">item_arr</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">item_arr</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">all_companies_array_rev</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">item_arr</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">item_arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_companies_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">all_companies_array</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_companies_dict_rev</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">all_companies_array_rev</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Edgar.get_cik_by_company_name"><a class="viewcode-back" href="../../api/edgarapi.html#edgarapi.edgar.Edgar.get_cik_by_company_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_cik_by_company_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_companies_dict</span><span class="p">[</span><span class="n">name</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Edgar.get_company_name_by_cik"><a class="viewcode-back" href="../../api/edgarapi.html#edgarapi.edgar.Edgar.get_company_name_by_cik">[docs]</a>    <span class="k">def</span> <span class="nf">get_company_name_by_cik</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cik</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_companies_dict_rev</span><span class="p">[</span><span class="n">cik</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Edgar.find_company_name"><a class="viewcode-back" href="../../api/edgarapi.html#edgarapi.edgar.Edgar.find_company_name">[docs]</a>    <span class="k">def</span> <span class="nf">find_company_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
+        <span class="n">possibleCompanies</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="n">words</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">company</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_companies_dict</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">word</span> <span class="ow">in</span> <span class="n">company</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)):</span>
+                <span class="n">possibleCompanies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">company</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">possibleCompanies</span></div></div>
+        
+
+<div class="viewcode-block" id="Filing"><a class="viewcode-back" href="../../api/edgarapi.html#edgarapi.edgar.Filing">[docs]</a><span class="k">class</span> <span class="nc">Filing</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class which allows downloading of filing and contains filing metadata.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">main_xpath</span> <span class="o">=</span> <span class="s1">&#39;//*[@id=&quot;formDiv&quot;]/div/table/tr[2]/td[3]/a&#39;</span>
+
+<div class="viewcode-block" id="Filing.__init__"><a class="viewcode-back" href="../../api/edgarapi.html#edgarapi.edgar.Filing.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elem</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">elem</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;href&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elem</span> <span class="o">=</span> <span class="n">_get_request_as_html_obj</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">text_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_text_content_by_link_xpath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_xpath</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_html_by_link_xpath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_xpath</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">filing_date</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_filing_info</span><span class="p">(</span><span class="s1">&#39;Filing Date&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">accepted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_filing_info</span><span class="p">(</span><span class="s1">&#39;Accepted&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">period_of_report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_filing_info</span><span class="p">(</span><span class="s1">&#39;Period of Report&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Filing.sub_filing"><a class="viewcode-back" href="../../api/edgarapi.html#edgarapi.edgar.Filing.sub_filing">[docs]</a>    <span class="k">def</span> <span class="nf">sub_filing</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub_document</span><span class="p">,</span> <span class="n">as_html</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="n">xpath</span> <span class="o">=</span> <span class="s1">&#39;//*[@id=&quot;formDiv&quot;]/div/table/tr[td[4]/text()=&quot;</span><span class="si">{sub_document}</span><span class="s1">&quot;]/td[3]/a&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">sub_document</span><span class="o">=</span><span class="n">sub_document</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">as_html</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_html_by_link_xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_text_content_by_link_xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_content_by_link_xpath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">):</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">elem</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s2">&quot;href&quot;</span><span class="p">]</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">_get_request_as_html_obj</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">content</span>
+
+    <span class="k">def</span> <span class="nf">_get_text_content_by_link_xpath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">):</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_content_by_link_xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">content</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">text_content</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_get_html_by_link_xpath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xpath</span><span class="p">):</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_content_by_link_xpath</span><span class="p">(</span><span class="n">xpath</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">content</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_filing_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">info_str</span><span class="p">):</span>
+        <span class="n">info_xpath</span> <span class="o">=</span> <span class="s1">&#39;//*[@id=&quot;formDiv&quot;]//div[@class=&quot;formGrouping&quot;]/div[preceding-sibling::div[1]/&#39;</span> \
+                     <span class="s1">&#39;text()=&quot;</span><span class="si">{info_str}</span><span class="s1">&quot;]/text()&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">info_str</span><span class="o">=</span><span class="n">info_str</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">elem</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">info_xpath</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<span class="k">def</span> <span class="nf">_get_request_as_html_obj</span><span class="p">(</span><span class="n">href</span><span class="p">):</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">href</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_documents"><a class="viewcode-back" href="../../api/edgarapi.html#edgarapi.edgar.get_documents">[docs]</a><span class="k">def</span> <span class="nf">get_documents</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">sub_document</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">no_of_documents</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">as_html</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">filings</span> <span class="o">=</span> <span class="n">get_filings</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">no_of_documents</span><span class="o">=</span><span class="n">no_of_documents</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sub_document</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">as_html</span><span class="p">:</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;content&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;text_content&#39;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">filing</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span> <span class="k">for</span> <span class="n">filing</span> <span class="ow">in</span> <span class="n">filings</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">filing</span><span class="o">.</span><span class="n">sub_filing</span><span class="p">(</span><span class="n">sub_document</span><span class="p">,</span> <span class="n">as_html</span><span class="o">=</span><span class="n">as_html</span><span class="p">)</span> <span class="k">for</span> <span class="n">filing</span> <span class="ow">in</span> <span class="n">filings</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="get_filings"><a class="viewcode-back" href="../../api/edgarapi.html#edgarapi.edgar.get_filings">[docs]</a><span class="k">def</span> <span class="nf">get_filings</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">no_of_documents</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">elems</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//*[@id=&quot;documentsbutton&quot;]&#39;</span><span class="p">)[:</span><span class="n">no_of_documents</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">Filing</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">elems</span><span class="p">]</span></div>
+
+
+<span class="k">def</span> <span class="nf">_get_sub_document_xpath</span><span class="p">(</span><span class="n">sub_document</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sub_document</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;//*[@id=&quot;formDiv&quot;]/div/table/tr[2]/td[3]/a&#39;</span>
+
+    <span class="k">return</span> <span class="s1">&#39;//*[@id=&quot;formDiv&quot;]/div/table/tr[td[4]/text()=&quot;</span><span class="si">{sub_document}</span><span class="s1">&quot;]/td[3]/a&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sub_document</span><span class="o">=</span><span class="n">sub_document</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_cik_from_company"><a class="viewcode-back" href="../../api/edgarapi.html#edgarapi.edgar.get_cik_from_company">[docs]</a><span class="k">def</span> <span class="nf">get_cik_from_company</span><span class="p">(</span><span class="n">companyName</span><span class="p">):</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">_get_request_as_html_obj</span><span class="p">(</span><span class="s2">&quot;https://www.sec.gov/cgi-bin/browse-edgar?company=&quot;</span> <span class="o">+</span> <span class="n">companyName</span><span class="p">)</span>
+    <span class="n">CIKList</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//*[@id=&quot;seriesDiv&quot;]/table/tr[*]/td[1]/a/text()&#39;</span><span class="p">)</span>
+    <span class="n">namesList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">&#39;//*[@id=&quot;seriesDiv&quot;]/table/tr[*]/td[2]&#39;</span><span class="p">):</span>
+        <span class="n">namesList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">elem</span><span class="o">.</span><span class="n">text_content</span><span class="p">())</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">CIKList</span><span class="p">,</span> <span class="n">namesList</span><span class="p">))</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table of Contents</a></h3>
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Getting started with edgarapi</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">edgarapi</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick DeRobertis.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

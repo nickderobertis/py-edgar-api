@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>edgarapi package &#8212; edgarapi 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_paramlinks.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="edgarapi" href="modules.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="edgarapi-package">
+<h1>edgarapi package<a class="headerlink" href="#edgarapi-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-edgarapi.edgar">
+<span id="edgarapi-edgar-module"></span><h2>edgarapi.edgar module<a class="headerlink" href="#module-edgarapi.edgar" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="edgarapi.edgar.Company">
+<em class="property">class </em><code class="sig-prename descclassname">edgarapi.edgar.</code><code class="sig-name descname">Company</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">cik</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/edgarapi/edgar.html#Company"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#edgarapi.edgar.Company" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Used for downloading filings for a particular company.</p>
+<dl class="method">
+<dt id="edgarapi.edgar.Company.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">cik</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/edgarapi/edgar.html#Company.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#edgarapi.edgar.Company.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="edgarapi.edgar.Company.get_all_filings">
+<code class="sig-name descname">get_all_filings</code><span class="sig-paren">(</span><em class="sig-param">filing_type=''</em>, <em class="sig-param">prior_to=''</em>, <em class="sig-param">ownership='include'</em>, <em class="sig-param">no_of_entries=100</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/edgarapi/edgar.html#Company.get_all_filings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#edgarapi.edgar.Company.get_all_filings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="edgarapi.edgar.Company.get_filings_url">
+<code class="sig-name descname">get_filings_url</code><span class="sig-paren">(</span><em class="sig-param">filing_type=''</em>, <em class="sig-param">prior_to=''</em>, <em class="sig-param">ownership='include'</em>, <em class="sig-param">no_of_entries=100</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/edgarapi/edgar.html#Company.get_filings_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#edgarapi.edgar.Company.get_filings_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="edgarapi.edgar.Edgar">
+<em class="property">class </em><code class="sig-prename descclassname">edgarapi.edgar.</code><code class="sig-name descname">Edgar</code><a class="reference internal" href="../_modules/edgarapi/edgar.html#Edgar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#edgarapi.edgar.Edgar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Used for getting companies.</p>
+<dl class="method">
+<dt id="edgarapi.edgar.Edgar.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/edgarapi/edgar.html#Edgar.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#edgarapi.edgar.Edgar.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="edgarapi.edgar.Edgar.find_company_name">
+<code class="sig-name descname">find_company_name</code><span class="sig-paren">(</span><em class="sig-param">words</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/edgarapi/edgar.html#Edgar.find_company_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#edgarapi.edgar.Edgar.find_company_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="edgarapi.edgar.Edgar.get_cik_by_company_name">
+<code class="sig-name descname">get_cik_by_company_name</code><span class="sig-paren">(</span><em class="sig-param">name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/edgarapi/edgar.html#Edgar.get_cik_by_company_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#edgarapi.edgar.Edgar.get_cik_by_company_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="edgarapi.edgar.Edgar.get_company_name_by_cik">
+<code class="sig-name descname">get_company_name_by_cik</code><span class="sig-paren">(</span><em class="sig-param">cik</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/edgarapi/edgar.html#Edgar.get_company_name_by_cik"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#edgarapi.edgar.Edgar.get_company_name_by_cik" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="edgarapi.edgar.Filing">
+<em class="property">class </em><code class="sig-prename descclassname">edgarapi.edgar.</code><code class="sig-name descname">Filing</code><span class="sig-paren">(</span><em class="sig-param">elem</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/edgarapi/edgar.html#Filing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#edgarapi.edgar.Filing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class which allows downloading of filing and contains filing metadata.</p>
+<dl class="method">
+<dt id="edgarapi.edgar.Filing.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">elem</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/edgarapi/edgar.html#Filing.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#edgarapi.edgar.Filing.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="edgarapi.edgar.Filing.accepted">
+<em class="property">property </em><code class="sig-name descname">accepted</code><a class="headerlink" href="#edgarapi.edgar.Filing.accepted" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="edgarapi.edgar.Filing.content">
+<em class="property">property </em><code class="sig-name descname">content</code><a class="headerlink" href="#edgarapi.edgar.Filing.content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="edgarapi.edgar.Filing.filing_date">
+<em class="property">property </em><code class="sig-name descname">filing_date</code><a class="headerlink" href="#edgarapi.edgar.Filing.filing_date" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="edgarapi.edgar.Filing.main_xpath">
+<code class="sig-name descname">main_xpath</code><em class="property"> = '//*[&#64;id=&quot;formDiv&quot;]/div/table/tr[2]/td[3]/a'</em><a class="headerlink" href="#edgarapi.edgar.Filing.main_xpath" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="edgarapi.edgar.Filing.period_of_report">
+<em class="property">property </em><code class="sig-name descname">period_of_report</code><a class="headerlink" href="#edgarapi.edgar.Filing.period_of_report" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="edgarapi.edgar.Filing.sub_filing">
+<code class="sig-name descname">sub_filing</code><span class="sig-paren">(</span><em class="sig-param">sub_document</em>, <em class="sig-param">as_html=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/edgarapi/edgar.html#Filing.sub_filing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#edgarapi.edgar.Filing.sub_filing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="edgarapi.edgar.Filing.text_content">
+<em class="property">property </em><code class="sig-name descname">text_content</code><a class="headerlink" href="#edgarapi.edgar.Filing.text_content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="edgarapi.edgar.get_cik_from_company">
+<code class="sig-prename descclassname">edgarapi.edgar.</code><code class="sig-name descname">get_cik_from_company</code><span class="sig-paren">(</span><em class="sig-param">companyName</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/edgarapi/edgar.html#get_cik_from_company"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#edgarapi.edgar.get_cik_from_company" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="edgarapi.edgar.get_documents">
+<code class="sig-prename descclassname">edgarapi.edgar.</code><code class="sig-name descname">get_documents</code><span class="sig-paren">(</span><em class="sig-param">tree</em>, <em class="sig-param">sub_document=None</em>, <em class="sig-param">no_of_documents=1</em>, <em class="sig-param">as_html=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/edgarapi/edgar.html#get_documents"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#edgarapi.edgar.get_documents" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="edgarapi.edgar.get_filings">
+<code class="sig-prename descclassname">edgarapi.edgar.</code><code class="sig-name descname">get_filings</code><span class="sig-paren">(</span><em class="sig-param">tree</em>, <em class="sig-param">no_of_documents=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/edgarapi/edgar.html#get_filings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#edgarapi.edgar.get_filings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-edgarapi">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-edgarapi" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Getting started with edgarapi</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">edgarapi</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">edgarapi package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-edgarapi.edgar">edgarapi.edgar module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-edgarapi">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">edgarapi</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">edgarapi</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Nick DeRobertis.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/api/edgarapi.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
