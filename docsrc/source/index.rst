@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Quick Start Example documentation!
-*********************************************
+Welcome to SEC EDGAR Python API documentation!
+***********************************************
 
-Some intro text. To get started, look here.
+To get started, look here.
 
 .. toctree::
 
@@ -17,30 +17,14 @@ An overview
 ===========
 
 
-My Module
-------------
-
-Some highlighted functionality from my module.
-
-This is a simple example::
-
-    import py_qs_example
-
-    obj = py_qs_example.mymodule.ExampleClass(5, int)
-    print('done')
-
 .. autosummary::
 
-      py_qs_example.mymodule.ExampleClass
-      py_qs_example.mymodule.example_function
+      edgarapi.edgar.Filing
+      edgarapi.edgar.Edgar
+      edgarapi.edgar.Company
+      edgarapi.edgar.getFilings
+      edgarapi.edgar.getDocuments
 
-My Package
-----------------
-
-.. autosummary::
-
-      py_qs_example.mypackage.module.ExampleClass2
-      py_qs_example.mypackage.module.example_function2
 
 API Documentation
 ------------------
