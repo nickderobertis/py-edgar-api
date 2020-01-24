@@ -8,11 +8,11 @@ PACKAGE_NAME = 'edgarapi'
 PACKAGE_VERSION_TUPLE = (0, 1, 0)
 
 # Short description of the package
-PACKAGE_SHORT_DESCRIPTION = "Download filings from SEC's Edgar using Python"
+PACKAGE_SHORT_DESCRIPTION = "Download filings from SEC's Edgar using Python."
 
 # Long description of the package
 PACKAGE_DESCRIPTION = """
-Download filings from SEC's Edgar using Python
+Download filings from SEC's Edgar using Python.
 """
 
 # Author
@@ -61,6 +61,6 @@ DOCS_OTHER_MOCK_IMPORTS = [
 ]
 
 PACKAGE_URLS = {
-    'Code': 'https://github.com/whoopnip/py-edgar-api/',
-    'Documentation': 'https://whoopnip.github.io/py-edgar-api/'
+    'Code': 'https://github.com/nickderobertis/py-edgar-api/',
+    'Documentation': 'https://nickderobertis.github.io/py-edgar-api/'
 }

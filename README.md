@@ -6,7 +6,5 @@ Download filings from SEC's Edgar using Python
 
 ## Links
 
-See the 
-[documentation here.](
-https://whoopnip.github.io/py-edgar-api/
-)
+See the
+[documentation here.](https://nickderobertis.github.io/py-edgar-api/)
