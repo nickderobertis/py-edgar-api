@@ -1,3 +1,7 @@
+"""
+Download filings from SEC's Edgar using Python.
+"""
+
 from os.path import dirname, basename, isfile
 import glob
 from .edgar import *
